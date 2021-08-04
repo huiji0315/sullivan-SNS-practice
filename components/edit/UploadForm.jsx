@@ -10,6 +10,8 @@ import { makeStyles } from "@material-ui/core/styles";
 import { useRouter } from "next/router";
 import { v4 as uuidv4 } from "uuid";
 import firebase from "../../firestores/firebase";
+import PhotoPreview from "./PhotoPreview";
+import SubmitButton from "./SubmitButton";
 
 const useStyles = makeStyles(() => ({
   form: {
@@ -32,11 +34,11 @@ const UploadForm = ({ feedUid }) => {
   const [loading, setLoading] = useState(false);
 
   /* photoUrl, content, location, tag, author 상태를 관리하도록 useState를 사용해주세요. 초기값 "" 예외) author 초기값은 {} (5줄) */
-  /*채워주세요*/
-  /*채워주세요*/
-  /*채워주세요*/
-  /*채워주세요*/
-  /*채워주세요*/
+  const [photoUrl, setPhotoUrl] = useState("");
+  const [content, setContent] = useState("");
+  const [location, setLocation] = useState("");
+  const [tag, setTag] = useState("");
+  const [author, setAuthor] = useState({});
 
   const fileButton = useRef();
 
@@ -51,11 +53,11 @@ const UploadForm = ({ feedUid }) => {
   async function getUser() {
     try {
       /* 1. api를 통해 접속한 유저의 정보를 가져오세요. */
-      const fetchUserInfo = await fetch(/*채워주세요*/);
+      const fetchUserInfo = await fetch("/api/user");
       const userInfo = await fetchUserInfo.json();
 
       /* 2. 유저의 정보로 상태 변화를 시켜주세요. (1줄) */
-      /*채워주세요*/
+      setAuthor(userInfo);
     } catch (e) {
       console.error(e);
     }
@@ -97,13 +99,20 @@ const UploadForm = ({ feedUid }) => {
 
   async function createFeed() {
     /* 1. 피드를 생성하기 위해, api에 전달해야하는 인자를 적어주세요 (6가지) */
-    const createParams = {};
+    const createParams = {
+      uid,
+      photoUrl,
+      content,
+      location,
+      tag,
+      author,
+    };
 
     try {
       /* 2. 피드를 생성하기 위한 api에 요청을 보내주세요. */ 
-      const createResult = await fetch(/* 채워주세요 */, {
-        method: /* 채워주세요 */,
-        body: /* 채워주세요 */,
+      const createResult = await fetch("/api/feed", {
+        method: "POST",
+        body: JSON.stringify(createParams),
         headers: {
           "Content-type": "application/json; charset=UTF-8",
         },
@@ -112,7 +121,8 @@ const UploadForm = ({ feedUid }) => {
 
       /* 3.생성후, 메인 피드 화면으로 이동하게 해주세요. */
       router.push({
-      /* 채워주세요 */
+        pathname: "/feed",
+        query: { message },
       });
     } catch (e) {
       console.error(e);
@@ -126,6 +136,11 @@ const UploadForm = ({ feedUid }) => {
       <Card variant="outlined">
         <CardContent>
           {/*  PhotoPreview 컴포넌트를 추가하고, 알맞은 props를 전달해주세요. */}
+          <PhotoPreview
+            photoUrl={photoUrl}
+            attachFile={attachFile}
+            loading={loading}
+          />
         </CardContent>
       </Card>
       <form id="edit" className={classes.form} onSubmit={submitHandler}>
@@ -154,8 +169,8 @@ const UploadForm = ({ feedUid }) => {
               fullWidth
               autoFocus
               required
-              value={/* 채워주세요 */}
-              onChange={/* 채워주세요 */}
+              value={content}
+              onChange={(e) => setContent(e.target.value)}
             />
           </Grid>
         </Grid>
@@ -175,8 +190,8 @@ const UploadForm = ({ feedUid }) => {
               margin="dense"
               fullWidth
               autoFocus
-              value={/* 채워주세요 */}
-              onChange={/* 채워주세요 */}
+              value={location}
+              onChange={(e) => setLocation(e.target.value)}
             />
           </Grid>
         </Grid>
@@ -196,13 +211,14 @@ const UploadForm = ({ feedUid }) => {
               margin="dense"
               fullWidth
               autoFocus
-              value={/* 채워주세요 */}
-              onChange={/* 채워주세요 */}
+              value={tag}
+              onChange={(e) => setTag(e.target.value)}
             />
           </Grid>
         </Grid>
         <CardActions>
-        {/*  SubmitButton 컴포넌트를 추가하세요. */}
+          {/*  SubmitButton 컴포넌트를 추가하세요. */}
+          <SubmitButton />
         </CardActions>
       </form>
     </>
