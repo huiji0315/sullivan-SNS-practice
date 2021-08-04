@@ -1,7 +1,7 @@
 import React from "react";
 import { Grid, Typography } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
-import Avatar from "../../components/common/Avatar";
+import Avatar from "../common/Avatar";
 
 const useStyles = makeStyles(() => ({
   profile: {
@@ -9,12 +9,7 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-const Profile = (
-  {
-    /* 전달받은 props를 써주세요. */
-    user
-  }
-) => {
+const Profile = ({ user }) => {
   const classes = useStyles();
 
   return (
@@ -22,7 +17,7 @@ const Profile = (
       <Grid
         container
         direction="row"
-        justify="center"
+        justifyContent="center"
         alignItems="center"
         className={classes.profile}
         spacing={4}
@@ -39,30 +34,27 @@ const Profile = (
           <Grid container direction="column">
             <Grid item>
               <Typography variant="h6" component="h2" paragraph>
-                {/* 유저의 이름 */}
-                {user.displayName}
+                {user.displayName} {/* 유저의 이름 */}
               </Typography>
             </Grid>
             <Grid item>
               <Grid container direction="row" spacing={2}>
                 <Grid item>
                   <Typography variant="body1" component="h2" paragraph>
-                    게시물 {/* 게시물 갯수 */}
-                    {user.feedList.length}
+                    게시물 {user.feedList.length} {/* 게시물 갯수 */}
                   </Typography>
                 </Grid>
                 <Grid item>
                   <Typography variant="body1" component="h2" paragraph>
-                    좋아하는 피드 수 {/* 좋아하는 피드 수 */}
-                    {user.likeFeeds.length}
+                    좋아하는 피드 수 {user.likeFeeds.length}{" "}
+                    {/* 좋아하는 피드 수 */}
                   </Typography>
                 </Grid>
               </Grid>
             </Grid>
             <Grid item>
               <Typography variant="caption" component="h2">
-                {/* 유저의 설명문 */}
-                {user.caption}
+                {user.caption} {/* 유저의 설명문 */}
               </Typography>
               <Typography
                 variant="subtitle2"
