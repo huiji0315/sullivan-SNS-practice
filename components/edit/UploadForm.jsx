@@ -25,7 +25,7 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-const UploadForm = ({ feedUid }) => {
+const UploadForm = () => {
   const router = useRouter();
   const classes = useStyles();
   const uid = uuidv4();
@@ -43,10 +43,6 @@ const UploadForm = ({ feedUid }) => {
   const fileButton = useRef();
 
   useEffect(() => {
-    if (feedUid) {
-      setUpdateMode(true);
-      getFeedDetail();
-    }
     getUser();
   }, []);
 
@@ -153,14 +149,14 @@ const UploadForm = ({ feedUid }) => {
         />
         <Grid container direction="row" alignItems="center">
           <Grid item md={2} xs={12}>
-            <label htmlFor="caption" className={classes.label}>
+            <label htmlFor="content" className={classes.label}>
               문구입력
             </label>
           </Grid>
           <Grid item md={10} xs={12}>
             {/* 알맞은 value 값과 event를 적어주세요 */}
             <TextField
-              id="caption"
+              id="content"
               multiline
               rows="4"
               placeholder="문구 입력..."
