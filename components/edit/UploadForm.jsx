@@ -105,11 +105,7 @@ const UploadForm = () => {
     };
 
     try {
-<<<<<<< HEAD
-      /* 2. 피드를 생성하기 위한 api에 요청을 보내주세요. */ 
-=======
       /* 2. 피드를 생성하기 위한 api에 요청을 보내주세요. */
->>>>>>> upstream/ch4
       const createResult = await fetch("/api/feed", {
         method: "POST",
         body: JSON.stringify(createParams),
@@ -217,10 +213,6 @@ const UploadForm = () => {
           </Grid>
         </Grid>
         <CardActions>
-<<<<<<< HEAD
-          {/*  SubmitButton 컴포넌트를 추가하세요. */}
-=======
->>>>>>> upstream/ch4
           <SubmitButton />
         </CardActions>
       </form>
