@@ -1,5 +1,7 @@
 import { Grid, makeStyles } from "@material-ui/core";
 import { useRouter } from "next/router";
+import { getFeedDetail } from "../api/feed/[feedUid].js";
+import { getUserInfo } from "../api/user";
 import DetailFeed from "../../components/feed/DetailFeed";
 import Comment from "../../components/feed/Comment";
 
@@ -15,13 +17,13 @@ const useStyles = makeStyles((theme) => ({
 
 export const getServerSideProps = async (context) => {
   /* 1.context에서 무엇을 가져와야 할까요? */
-  const {/* 채워주세요. */} = context.query;
+  const { feedUid } = context.query;
 
   /* 2. api폴더 속에서, 알맞은 함수를 불러와주세요. */
-  const user = await /* 채워주세요. */;
+  const user = await getUserInfo();
 
   /* 3. api폴더 속에서, 알맞은 함수를 불러와주세요. 파라미터필요 */
-  const feedDetail = await /* 채워주세요. */;
+  const feedDetail = await getFeedDetail(feedUid);
 
   /* 4.전달해야 할 props를 return 해주세요. (3가지) */
   return {
