@@ -16,7 +16,7 @@ const index = () => {
 
       /* 2. 유저의 정보가 있다면, 메인피드화면(/feed) 로 이동하고 
       유저의 정보가 없다면, 유저 정보가 없습니다. 가 화면에 뜨게 해주세요. */
-      userInfo ?  router.push("/feed") : <div>유저 정보가 없습니다.</div>;
+      userInfo ? router.push("/feed") : <div>유저 정보가 없습니다.</div>;
     } catch (e) {
       console.error(e);
     }

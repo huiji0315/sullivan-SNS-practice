@@ -10,8 +10,8 @@ import { makeStyles } from "@material-ui/core/styles";
 import { useRouter } from "next/router";
 import { v4 as uuidv4 } from "uuid";
 import firebase from "../../firestores/firebase";
-import PhotoPreview from "./PhotoPreview";
-import SubmitButton from "./SubmitButton";
+import SubmitButton from "../edit/SubmitButton";
+import PhotoPreview from "../edit/PhotoPreview";
 
 const useStyles = makeStyles(() => ({
   form: {
@@ -25,7 +25,7 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-const UploadForm = () => {
+const UploadForm = (/*  알맞은 props를 전달해주세요. */) => {
   const router = useRouter();
   const classes = useStyles();
   const uid = uuidv4();
@@ -43,6 +43,10 @@ const UploadForm = () => {
   const fileButton = useRef();
 
   useEffect(() => {
+    if (feedUid) {
+      setUpdateMode(true);
+      getFeedDetail();
+    }
     getUser();
   }, []);
 
@@ -77,7 +81,21 @@ const UploadForm = () => {
     fileButton.current.click();
   }
 
-  async function getFeedDetail() {}
+  async function getFeedDetail() {
+    try {
+      /* 1.한 피드의 디테일 정보를 가져오는 api를 요청해주세요. */
+      const fetchFeedDetail = await fetch(/* 채워주세요. */);
+      const feedDetail = await fetchFeedDetail.json();
+
+      /* 2.가져온 데이터를 가지고 알맞은 상태변화를 시켜주세요. (4가지) */
+      /* 채워주세요. */
+      /* 채워주세요. */
+      /* 채워주세요. */
+      /* 채워주세요. */
+    } catch (e) {
+      console.error(e);
+    }
+  }
 
   async function submitHandler(event) {
     event.preventDefault();
@@ -105,7 +123,7 @@ const UploadForm = () => {
     };
 
     try {
-      /* 2. 피드를 생성하기 위한 api에 요청을 보내주세요. */ 
+      /* 2. 피드를 생성하기 위한 api에 요청을 보내주세요. */
       const createResult = await fetch("/api/feed", {
         method: "POST",
         body: JSON.stringify(createParams),
@@ -125,7 +143,35 @@ const UploadForm = () => {
     }
   }
 
-  async function updateFeed() {}
+  async function updateFeed() {
+    /* 1. 피드를 업데이트 하기 위해, api에 전달해야하는 인자를 적어주세요 (5가지) */
+    const updateParams = {
+      /* 채워주세요. */
+      /* 채워주세요. */
+      /* 채워주세요. */
+      /* 채워주세요. */
+      /* 채워주세요. */
+    };
+
+    try {
+      /* 2. 피드의 업데이트를 위한 api에 요청을 보내주세요. */
+      const updateResult = await fetch(/* 채워주세요. */, {
+        method: /* 채워주세요. */,
+        body: JSON.stringify(updateParams),
+        headers: {
+          "Content-type": "application/json; charset=UTF-8",
+        },
+      });
+      const { message } = await updateResult.json();
+
+      router.push({
+        pathname: "/feed",
+        query: { message },
+      });
+    } catch (e) {
+      console.error(e);
+    }
+  }
 
   return (
     <>
@@ -213,7 +259,6 @@ const UploadForm = () => {
           </Grid>
         </Grid>
         <CardActions>
-          {/*  SubmitButton 컴포넌트를 추가하세요. */}
           <SubmitButton />
         </CardActions>
       </form>
